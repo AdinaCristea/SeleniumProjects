@@ -1,0 +1,69 @@
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+public class WriteExcelFile {
+
+    public static void main(String[] args) {
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+
+        //Create excel sheet
+
+        XSSFSheet sampleSheet = workbook.createSheet("SampleSheet");
+
+        //Creating the Data
+
+        Map<String, Object[]> dataset = new TreeMap<String, Object[]>();
+        dataset.put("1", new Object[]{"ID", "Name", "Company"});
+        dataset.put("2", new Object[]{"1", "James", "Facebook"});
+        dataset.put("3", new Object[]{"2", "Maria", "Google Inc"});
+
+        // Iterate over the data
+
+        Set<String> set = dataset.keySet();
+        int rownum = 0;
+
+        for (String key : set) {
+
+            Row row = sampleSheet.createRow(rownum++);
+
+            Object[] data = dataset.get(key);
+
+            int cellNum = 0;
+            for (Object value : data) {
+
+                Cell cell = row.createCell(cellNum);
+
+                if (value instanceof String) {
+                    cell.setCellValue((String) (value));
+                } else if (value instanceof Integer) {
+                    cell.setCellValue((Integer) value);
+                }
+            }
+
+        }
+
+        //WriteDownFile on HardDisk
+
+        try {
+            FileOutputStream writeFile = new FileOutputStream("sample.xlsx");
+            workbook.write(writeFile);
+            writeFile.close();
+            System.out.println();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
