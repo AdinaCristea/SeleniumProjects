@@ -1,0 +1,49 @@
+
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+
+public class SalesforceSignInTest {
+
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver","C:\\Users\\Kiske\\Desktop\\Chrome2\\chromedriver.exe");
+
+        WebDriver driver=new ChromeDriver();
+        driver.manage().window().maximize();
+
+        //open SalesForce
+
+        String url="https://login.salesforce.com/";
+        driver.get(url);
+
+        //Verify PageTitle
+        String pageTitle=driver.getTitle();
+        Assert.assertEquals(pageTitle,"Login | Salesforce");
+
+
+
+        //Insert Username & Password
+        WebElement userName=driver.findElement(By.id("username"));
+        WebElement password=driver.findElement(By.id("password"));
+
+        userName.sendKeys("adinaa.iulia@gmail.com");
+        password.sendKeys("123456789");
+
+        //Click and submit
+        WebElement signInButton=driver.findElement(By.id("Login"));
+        signInButton.click();
+        
+        try {
+                Thread.sleep(4000);
+        }
+        catch (InterruptedException e){
+                e.printStackTrace();
+        }
+    }
+
+}
