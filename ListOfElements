@@ -1,0 +1,48 @@
+package WebElementSelenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Test;
+
+import java.util.List;
+
+@Test
+public class FindElement {
+
+    public void findElement() {
+
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Kiske\\Desktop\\Chrome2\\chromedriver.exe");
+
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window();
+
+        driver.get("https://freecrm.com");
+
+
+        WebElement Login = driver.findElement(By.xpath("/html/body/div[1]/header/div/nav/div[2]/div/div[2]/ul/a"));
+        Login.click();
+
+        //Multiple text fields
+        List<WebElement> textField=driver.findElements(By.className("form-control"));
+
+        driver.findElement(By.name("email")).sendKeys("adinaa.iulia@gmail.com");
+        textField.get(0).sendKeys("adinaa.iulia@gmail.com");
+
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        textField.get(1).sendKeys("12345678");
+
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
