@@ -1,0 +1,36 @@
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class GetLinkStatus {
+
+    public static int invalidLink;
+
+    public static void verifyLink(String linkString){
+        try {
+            URL url = new URL(linkString);
+            //Open HTTP connection
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            //Define timeOut
+            urlConnection.setConnectTimeout(50000);
+
+            //Hit URL
+
+            urlConnection.connect();
+            if(urlConnection.getResponseCode()==200) {
+
+            } else{
+                invalidLink++;
+                System.out.println(linkString + " : " + urlConnection.getResponseMessage() + " : " + urlConnection.HTTP_NOT_FOUND);
+            }
+        }
+        catch (MalformedURLException e){
+
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
